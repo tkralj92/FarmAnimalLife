@@ -23,6 +23,9 @@ import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
 public class AddNewPigActivity extends AppCompatActivity {
 
+    private Spinner fatherSp = (Spinner) findViewById(R.id.spinnerFather);
+    private Spinner motherSp = (Spinner) findViewById(R.id.spinnerMother);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +33,7 @@ public class AddNewPigActivity extends AppCompatActivity {
 
         MyDbHelper myDb = new MyDbHelper(this);
 
-        Spinner fatherSp = (Spinner) findViewById(R.id.spinnerFather);
-        Spinner motherSp = (Spinner) findViewById(R.id.spinnerMother);
+
         List<Integer> motherArray = new ArrayList<>();
         motherArray.addAll(myDb.getAllMothers(null));
         ArrayAdapter<Integer> adapter2 = new ArrayAdapter<Integer>(
@@ -55,8 +57,7 @@ public class AddNewPigActivity extends AppCompatActivity {
         RadioButton pig_gender = (RadioButton) findViewById(R.id.pig_male);
         RadioButton pig_genderF = (RadioButton) findViewById((R.id.pig_female));
         DatePicker pig_date = (DatePicker) findViewById(R.id.datePicker2);
-        Spinner fatherSp = (Spinner) findViewById(R.id.spinnerFather);
-        Spinner motherSp = (Spinner) findViewById(R.id.spinnerMother);
+        
         int year = pig_date.getYear();
         int month = pig_date.getMonth();
         int day = pig_date.getDayOfMonth();
