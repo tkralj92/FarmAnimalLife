@@ -111,9 +111,8 @@ public class PigsDetailsActivity extends AppCompatActivity {
         String str = id.getText().toString();
         str = str.substring(4);
         int i = Integer.parseInt(str);
-        Cursor cr = myDb.getPig(i);
-        cr.moveToFirst();
-        Pig pig = DbConverter.cursotToPig(cr);
+
+        Pig pig = myDb.getPig(i);
 
         if(pig.isGender()){
             intent.putExtra("OBJEKT", (Sow)pig);

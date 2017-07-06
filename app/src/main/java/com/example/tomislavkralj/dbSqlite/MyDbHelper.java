@@ -103,10 +103,19 @@ public class MyDbHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public Cursor getPig(int id){
+    public Pig getPig(int id){
+        Pig pig = null;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + MyConstants.DATABASE_TABLE + " WHERE " + MyConstants.KEY_ID + " = " + id, null);
-        return  cursor;
+
+        if (cursor.moveToFirst()) {
+            try {
+                pig = DbConverter.cursotToPig(cursor);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return  pig;
     }
 
     public void deletePig(int id){

@@ -75,99 +75,34 @@ public class CalculationActivity extends AppCompatActivity {
 
     public void Calculate(View view) {
 
+        PigCalculator pigCalc = new PigCalculator();
+        double pigWeight = piggy.getWeight();
+        String feedName = pig_feed.getSelectedItem().toString();
+        int wantedWeight = Integer.parseInt(pig_new_weight.getText().toString());
+        double feedKG = Double.parseDouble(feed_kg.getText().toString());
+
         View view1 = this.getCurrentFocus();
         if (view1 != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-
         if(feed_kg.getText().toString().equals("") || pig_new_weight.getText().toString().equals("")) {
             Toast msg = Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT);
             msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
             msg.show();
-        }else {
-            String feedName = pig_feed.getSelectedItem().toString();
-
-            MyDbHelper myDb = new MyDbHelper(this);
-            Feed feed = new Feed();
-            try {
-                feed = myDb.getFeedByName(feedName);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            int wantedWeight = Integer.parseInt(pig_new_weight.getText().toString());
-            double feedKG = Double.parseDouble(feed_kg.getText().toString());
-
-            if(feedKG < 0 ){
-                Toast msg = Toast.makeText(this, "Feed amount must be a positive number!", Toast.LENGTH_SHORT);
-                msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                msg.show();
-            }else if(wantedWeight < piggy.getWeight()){
-                Toast msg = Toast.makeText(this, "Wanted weight must be higher than actual weight!", Toast.LENGTH_SHORT);
-                msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                msg.show();
-            }else {
-                Cursor crS = myDb.getPig(piggy.getIdMother());
-                Cursor crH = myDb.getPig(piggy.getIdFather());
-                Sow sow = new Sow();
-                Hog hog = new Hog();
-
-                if (crS.moveToFirst()) {
-                    try {
-                        sow = (Sow) DbConverter.cursotToPig(crS);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    sow.setPrecentOfMortality(0);
-                    sow.setNumOfchildrenPerBirth(0);
-                }
-
-                if (crH.moveToFirst()) {
-                    try {
-                        hog = (Hog) DbConverter.cursotToPig(crH);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    hog.setPercentageOfMortality(0);
-                    hog.setNumOfChildrenPerPregnancy(0);
-                }
-
-                double mortality;
-                double pigsPerBirth;
-                if (piggy.isGender()) {
-                    Sow piggyS = (Sow) piggy;
-                    mortality = 0.5 * hog.getPercentageOfMortality() + 0.5 * sow.getPrecentOfMortality()
-                            + piggyS.getPrecentOfMortality();
-                    mortality /= 2.0;
-                    pigsPerBirth = 0.5 * hog.getNumOfChildrenPerPregnancy() + 0.5 * sow.getNumOfchildrenPerBirth()
-                            + piggyS.getNumOfchildrenPerBirth();
-                    pigsPerBirth /= 2.0;
-                } else {
-                    Hog piggyH = (Hog) piggy;
-                    mortality = 0.5 * hog.getPercentageOfMortality() + 0.5 * sow.getPrecentOfMortality()
-                            + piggyH.getPercentageOfMortality();
-                    mortality /= 2.0;
-                    pigsPerBirth = 0.5 * hog.getNumOfChildrenPerPregnancy() + 0.5 * sow.getNumOfchildrenPerBirth()
-                            + piggyH.getNumOfChildrenPerPregnancy();
-                    pigsPerBirth /= 2.0;
-                }
-
-                pig_mortality.setText("Piglet mortality: " + Double.toString(mortality*100) + "%");
-                pig_birth.setText("Piglet per birth: " + Double.toString(pigsPerBirth));
-
-                double pigWeight = piggy.getWeight();
-                double weightNow = pigWeight;
-                double feedCalories = feed.getFeedCalories();
-                feedKG = feedKG * (feedCalories / 385);
-
-                PigCalculator pigCalc = new PigCalculator();
-                String answer = pigCalc.calculateDays(wantedWeight, weightNow,feedKG);
-
-                pig_time.setText(answer);
-            }
+            return;
         }
+        if(wantedWeight < piggy.getWeight()){
+            Toast msg = Toast.makeText(this, "Wanted weight must be higher than actual weight!", Toast.LENGTH_SHORT);
+            msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+            msg.show();
+            return;
+        }
+
+        String answer = pigCalc.calculateDaysUntillWantedWeight(getApplicationContext(), wantedWeight, pigWeight, feedKG, feedName);
+        pig_mortality.setText(pigCalc.calculateMortalityRate(getApplicationContext(), piggy));
+        pig_birth.setText(pigCalc.calculatePigletsPerBirth(getApplicationContext(),piggy));
+        pig_time.setText(answer);
     }
 }
