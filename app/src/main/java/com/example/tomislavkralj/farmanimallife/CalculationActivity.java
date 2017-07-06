@@ -50,23 +50,17 @@ public class CalculationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calculation);
         ButterKnife.bind(this);
 
-
         List<String> allFeed = new ArrayList<String>();
-
         Intent intent = getIntent();
-        Pig pig= null;
-        if(intent.getExtras().getParcelable("OBJEKT").equals(null)){
-        }else{
-            pig = intent.getExtras().getParcelable("OBJEKT");
-        }
-        piggy = pig;
-
+        piggy = intent.getExtras().getParcelable("OBJEKT");
         pig_weight.setText("Pig weight is: " + Integer.toString(piggy.getWeight()));
+
         try {
             allFeed = myDb.getAllFeedNames();
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, allFeed);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -86,7 +80,6 @@ public class CalculationActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-
         if(feed_kg.getText().toString().equals("") || pig_new_weight.getText().toString().equals("")) {
             Toast msg = Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT);
             msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);

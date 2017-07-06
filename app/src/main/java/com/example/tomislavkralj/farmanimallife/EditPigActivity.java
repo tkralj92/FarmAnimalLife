@@ -31,53 +31,61 @@ import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class EditPigActivity extends AppCompatActivity {
 
     private Pig piggy;
+    private MyDbHelper myDbFeed = new MyDbHelper(this);
+    private DecimalFormat numForm = new DecimalFormat("#.00");
+
+    @BindView(R.id.pig_id) TextView pig_id;
+    @BindView(R.id.gender) ImageView pig_gender;
+    @BindView(R.id.pig_weight)  EditText pig_wight;
+    @BindView(R.id.radio_pregnant) RadioGroup radio_grp;
+    @BindView(R.id.radio_yes) RadioButton pig_pregnantY;
+    @BindView(R.id.radio_no) RadioButton pig_pregnantN;
+    @BindView(R.id.feed_spinner) Spinner feed_spinner;
+    @BindView(R.id.pig_dateOfBirth) DatePicker pig_dateOfBirth;
+    @BindView(R.id.spinnerFather) Spinner fatherSp;
+    @BindView(R.id.spinnerMother) Spinner motherSp;
+    @BindView(R.id.extra_oneE) EditText extra_oneE;
+    @BindView(R.id.extra_twoE) EditText extra_twoE;
+    @BindView(R.id.extra_threeE) EditText extra_threeE;
+    @BindView(R.id.extra_one) TextView extra_one;
+    @BindView(R.id.extra_two) TextView extra_two;
+    @BindView(R.id.extra_three) TextView extra_three;
+    @BindView(R.id.glavni) ConstraintLayout glavniLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_pig);
+        ButterKnife.bind(this);
+
 
         Intent intent = getIntent();
-        DecimalFormat numForm = new DecimalFormat("#.00");
-        Pig pig= intent.getExtras().getParcelable("OBJEKT");
-        piggy = pig;
-        MyDbHelper myDbFeed = new MyDbHelper(this);
+        piggy = intent.getExtras().getParcelable("OBJEKT");
 
-        TextView pig_id = (TextView) findViewById(R.id.pig_id);
-        ImageView pig_gender = (ImageView) findViewById(R.id.gender);
-        EditText pig_wight = (EditText) findViewById(R.id.pig_wight);
-        RadioGroup radio_grp = (RadioGroup) findViewById(R.id.radio_pregnant);
-        RadioButton pig_pregnantY = (RadioButton) findViewById(R.id.radio_yes);
-        RadioButton pig_pregnantN = (RadioButton) findViewById(R.id.radio_no);
-        Spinner feed_spinner = (Spinner) findViewById(R.id.feed_spinner);
-        DatePicker pig_dateOfBirth = (DatePicker) findViewById(R.id.pig_dateOfBirth);
 
-        Spinner fatherSp = (Spinner) findViewById(R.id.spinnerFather);
-        Spinner motherSp = (Spinner) findViewById(R.id.spinnerMother);
 
-        EditText extra_oneE = (EditText) findViewById(R.id.extra_oneE);
-        EditText extra_twoE = (EditText) findViewById(R.id.extra_twoE);
-        EditText extra_threeE = (EditText) findViewById(R.id.extra_threeE);
 
-        TextView extra_one = (TextView) findViewById(R.id.extra_one);
-        TextView extra_two = (TextView) findViewById(R.id.extra_two);
-        TextView extra_three = (TextView) findViewById(R.id.extra_three);
 
-        ConstraintLayout glavniLay = (ConstraintLayout) findViewById(R.id.glavni);
 
-//////POPUNJAVANJE VIEW-a
-        pig_id.setText(Integer.toString(pig.getId()));
-        if(pig.isGender()){
+
+
+
+
+        pig_id.setText(Integer.toString(piggy.getId()));
+        if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
             glavniLay.setBackgroundColor(Color.parseColor("#ffb6c1"));
         }else{
             pig_gender.setImageResource(R.drawable.male_sign_blue);
             glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
         }
-        pig_wight.setText(Integer.toString(pig.getWeight()));
+        pig_wight.setText(Integer.toString(piggy.getWeight()));
 ///SPINNNNNERRRRRRRRR INICIJALIZACIJA
         int position;
         List<Integer> motherArray = new ArrayList<>();
@@ -86,7 +94,7 @@ public class EditPigActivity extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_item, motherArray);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         motherSp.setAdapter(adapter2);
-        position = adapter2.getPosition(pig.getIdMother());
+        position = adapter2.getPosition(piggy.getIdMother());
         motherSp.setSelection(position);
 
         List<Integer> fatherArray = new ArrayList<>();
@@ -95,7 +103,7 @@ public class EditPigActivity extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_item, fatherArray);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fatherSp.setAdapter(adapter3);
-        position = adapter3.getPosition(pig.getIdFather());
+        position = adapter3.getPosition(piggy.getIdFather());
         fatherSp.setSelection(position);
 
         List<String> spinnerArray =  new ArrayList<String>();
@@ -108,19 +116,19 @@ public class EditPigActivity extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_item, spinnerArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         feed_spinner.setAdapter(adapter);
-        int spinnerLocation = adapter.getPosition(pig.getFeed());
+        int spinnerLocation = adapter.getPosition(piggy.getFeed());
         feed_spinner.setSelection(spinnerLocation);
 ///////////////////////////
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(pig.getDateOfBirth());
+        calendar.setTime(piggy.getDateOfBirth());
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         pig_dateOfBirth.updateDate(year,month,day);
 
 /////musko zenski dio
-        if(pig instanceof Hog) {
-            Hog hog = (Hog) pig;
+        if(piggy instanceof Hog) {
+            Hog hog = (Hog) piggy;
             radio_grp.setVisibility(View.INVISIBLE);
             extra_one.setText("Succesful\npregnancies (%) ");
             extra_oneE.setText(String.valueOf(numForm.format(hog.getPercentageOfSuccPerpregnancys())));
@@ -135,7 +143,7 @@ public class EditPigActivity extends AppCompatActivity {
             extra_threeE.setText(String.valueOf(hog.getNumOfChildrenPerPregnancy()));
 
         }else{
-            Sow sow = (Sow) pig;
+            Sow sow = (Sow) piggy;
             radio_grp.setEnabled(true);
             if(sow.isPregnant()==0){
                 pig_pregnantN.setChecked(true);
