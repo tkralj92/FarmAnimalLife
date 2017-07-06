@@ -25,13 +25,14 @@ public class AddNewPigActivity extends AppCompatActivity {
 
     private Spinner fatherSp = (Spinner) findViewById(R.id.spinnerFather);
     private Spinner motherSp = (Spinner) findViewById(R.id.spinnerMother);
+    MyDbHelper myDb = new MyDbHelper(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_pig);
 
-        MyDbHelper myDb = new MyDbHelper(this);
 
 
         List<Integer> motherArray = new ArrayList<>();
@@ -52,12 +53,11 @@ public class AddNewPigActivity extends AppCompatActivity {
 
     public void addNewPig(View view) {
 
-        MyDbHelper myDb = new MyDbHelper(this);
         EditText pig_weight = (EditText) findViewById(R.id.pig_weight);
         RadioButton pig_gender = (RadioButton) findViewById(R.id.pig_male);
         RadioButton pig_genderF = (RadioButton) findViewById((R.id.pig_female));
         DatePicker pig_date = (DatePicker) findViewById(R.id.datePicker2);
-        
+
         int year = pig_date.getYear();
         int month = pig_date.getMonth();
         int day = pig_date.getDayOfMonth();
