@@ -7,9 +7,14 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -24,42 +29,45 @@ import com.example.tomislavkralj.dbSqlite.DbConverter;
 
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class PigsDetailsActivity extends AppCompatActivity {
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy", Locale.ENGLISH);
     private Pig piggy;
 
+    @BindView(R.id.pig_id) TextView pig_id;
+    @BindView(R.id.gender) ImageView pig_gender;
+    @BindView(R.id.pig_weight) EditText pig_weight;
+    @BindView(R.id.pig_pregnant) TextView pig_pregnant;
+    @BindView(R.id.pig_feed_name) TextView pig_feed_name;
+    @BindView(R.id.pig_dateOfBirth) TextView pig_dateOfBirth;
+    @BindView(R.id.pig_Father_ID) TextView pig_Father;
+    @BindView(R.id.pig_Mother_ID) TextView pig_Mother;
+    @BindView(R.id.EditImageButton) ImageButton pig_edit;
+    @BindView(R.id.pig_numberOfBirths) TextView pig_numBirths;
+    @BindView(R.id.percentageOfMortality) TextView pig_perMort;
+    @BindView(R.id.numChildrenPerBirth) TextView pig_numOfChilPerBirth;
+    @BindView(R.id.glavni) ConstraintLayout glavniLay;
+
+
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pigs_details);
+        ButterKnife.bind(this);
+
         Intent intent = getIntent();
-        Pig pig= null;
-        if(intent.getExtras().getParcelable("OBJEKT") == (null)){
-
-        }else{
-           pig = intent.getExtras().getParcelable("OBJEKT");
-        }
-
-        TextView pig_id = (TextView) findViewById(R.id.pig_id);
-        TextView pig_weight = (TextView) findViewById(R.id.pig_weight);
-        TextView pig_pregnant = (TextView) findViewById(R.id.pig_pregnant);
-        TextView pig_dateOfBirth = (TextView) findViewById(R.id.pig_dateOfBirth);
-        TextView pig_feed_name = (TextView) findViewById(R.id.pig_feed_name);
-        ImageView pig_gender = (ImageView) findViewById(R.id.gender);
-        ImageButton pig_edit = (ImageButton) findViewById(R.id.EditImageButton);
-
-        TextView pig_Father = (TextView) findViewById(R.id.pig_Father_ID);
-        TextView pig_Mother = (TextView) findViewById(R.id.pig_Mother_ID);
-        TextView pig_numBirths = (TextView) findViewById(R.id.pig_numberOfBirths);
-        TextView pig_perMort = (TextView) findViewById(R.id.percentageOfMortality);
-        TextView pig_numOfChilPerBirth = (TextView) findViewById(R.id.numChildrenPerBirth);
-
-        ConstraintLayout glavniLay = (ConstraintLayout) findViewById(R.id.glavni);
+        piggy = intent.getExtras().getParcelable("OBJEKT");
 
 
 
-        if(pig.isGender()){
+
+
+
+
+        if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
             glavniLay.setBackgroundColor(Color.parseColor("#ffb6c1"));
             pig_edit.setImageResource(R.drawable.edit_write_icon_pink);
@@ -68,11 +76,11 @@ public class PigsDetailsActivity extends AppCompatActivity {
             glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
             pig_edit.setImageResource(R.drawable.edit_write_icon_blue);
         }
-        pig_id.setText("ID: "+Integer.toString(pig.getId()));
-        pig_weight.setText("Weight: "+Integer.toString(pig.getWeight())+"kg");
-        pig_feed_name.setText("Feed: " +pig.getFeed());
-        if(pig instanceof Sow ) {
-            Sow sow = (Sow) pig;
+        pig_id.setText("ID: "+Integer.toString(piggy.getId()));
+        pig_weight.setText("Weight: "+Integer.toString(piggy.getWeight())+"kg");
+        pig_feed_name.setText("Feed: " +piggy.getFeed());
+        if(piggy instanceof Sow ) {
+            Sow sow = (Sow) piggy;
             if(sow.isPregnant() == 0) {
                 pig_pregnant.setText("Pregnant: No");
             }else {
@@ -82,24 +90,22 @@ public class PigsDetailsActivity extends AppCompatActivity {
             pig_perMort.setText("Mortality rate: "+Double.toString(Math.round(sow.getPrecentOfMortality()*100.0))+"%");
             pig_numOfChilPerBirth.setText("Piglets/Birth: "+Double.toString(sow.getNumOfchildrenPerBirth()));
         }else{
-            Hog hog = (Hog) pig;
+            Hog hog = (Hog) piggy;
             pig_pregnant.setVisibility(View.INVISIBLE);
             pig_numBirths.setText("Percent of succesful pregnancys: "+Double.toString(Math.round(hog.getPercentageOfSuccPerpregnancys()))+"%");
             pig_perMort.setText("Mortality rate: "+Double.toString(Math.round(hog.getPercentageOfMortality()*100.0))+"%");
             pig_numOfChilPerBirth.setText("Piglets/Pregnancy: "+Integer.toString(hog.getNumOfChildrenPerPregnancy()));
 
         }
-        Date date = pig.getDateOfBirth();
+        Date date = piggy.getDateOfBirth();
 
         if(date.equals(null) || date.equals("")){
             pig_dateOfBirth.setText("Date of birth: " );
         }else{
-            pig_dateOfBirth.setText("Date of birth: " + sdf.format(pig.getDateOfBirth()));
+            pig_dateOfBirth.setText("Date of birth: " + sdf.format(piggy.getDateOfBirth()));
         }
-        pig_Father.setText("Father ID: "+Integer.toString(pig.getIdFather()));
-        pig_Mother.setText("Mother ID: "+Integer.toString(pig.getIdMother()));
-
-        piggy = pig;
+        pig_Father.setText("Father ID: "+Integer.toString(piggy.getIdFather()));
+        pig_Mother.setText("Mother ID: "+Integer.toString(piggy.getIdMother()));
     }
 
     public void editPig(View view) throws ParseException {

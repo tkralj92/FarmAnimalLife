@@ -144,7 +144,7 @@ public class EditPigActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(this, PigsListActivity.class);
         final MyDbHelper myDb = new MyDbHelper(this);
-        final Context cntx = this;
+        final Context context = this;
 
         builder.setMessage("Do you want to save the changes?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -179,7 +179,7 @@ public class EditPigActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }else{
-                Toast msg = Toast.makeText(cntx, "Fill all the fields", Toast.LENGTH_SHORT);
+                Toast msg = Toast.makeText(context, "Fill all the fields", Toast.LENGTH_SHORT);
                 msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
                 msg.show();
             }
