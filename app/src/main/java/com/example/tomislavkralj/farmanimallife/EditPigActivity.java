@@ -30,6 +30,7 @@ import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
+import com.example.tomislavkralj.adapters.SpinnerAdapters;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,12 +38,12 @@ import butterknife.ButterKnife;
 public class EditPigActivity extends AppCompatActivity {
 
     private Pig piggy;
-    private MyDbHelper myDbFeed = new MyDbHelper(this);
+    private MyDbHelper myDb = new MyDbHelper(this);
     private DecimalFormat numForm = new DecimalFormat("#.00");
 
     @BindView(R.id.pig_id) TextView pig_id;
     @BindView(R.id.gender) ImageView pig_gender;
-    @BindView(R.id.pig_weight)  EditText pig_wight;
+    @BindView(R.id.pig_weight)  EditText pig_weight;
     @BindView(R.id.radio_pregnant) RadioGroup radio_grp;
     @BindView(R.id.radio_yes) RadioButton pig_pregnantY;
     @BindView(R.id.radio_no) RadioButton pig_pregnantN;
@@ -64,18 +65,12 @@ public class EditPigActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_pig);
         ButterKnife.bind(this);
 
-
         Intent intent = getIntent();
         piggy = intent.getExtras().getParcelable("OBJEKT");
-
-
-
-
-
-
-
-
-
+        int position;
+        ArrayAdapter<Integer> adapterMother = SpinnerAdapters.getAllMothersSpinnerAdapter(piggy, this);
+        ArrayAdapter<Integer> adapterFather = SpinnerAdapters.getAllFathersSpinnerAdapter(piggy, this);
+        ArrayAdapter<String> adapterFeed = SpinnerAdapters.getAllFeedSpinnerAdapter(this);
 
         pig_id.setText(Integer.toString(piggy.getId()));
         if(piggy.isGender()){
@@ -85,40 +80,21 @@ public class EditPigActivity extends AppCompatActivity {
             pig_gender.setImageResource(R.drawable.male_sign_blue);
             glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
         }
-        pig_wight.setText(Integer.toString(piggy.getWeight()));
-///SPINNNNNERRRRRRRRR INICIJALIZACIJA
-        int position;
-        List<Integer> motherArray = new ArrayList<>();
-        motherArray.addAll(myDbFeed.getAllMothers(piggy));
-        ArrayAdapter<Integer> adapter2 = new ArrayAdapter<Integer>(
-                this, android.R.layout.simple_spinner_item, motherArray);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        motherSp.setAdapter(adapter2);
-        position = adapter2.getPosition(piggy.getIdMother());
+
+        pig_weight.setText(Integer.toString(piggy.getWeight()));
+
+        motherSp.setAdapter(adapterMother);
+        position = adapterMother.getPosition(piggy.getIdMother());
         motherSp.setSelection(position);
 
-        List<Integer> fatherArray = new ArrayList<>();
-        fatherArray.addAll(myDbFeed.getAllFathers(piggy));
-        ArrayAdapter<Integer> adapter3 = new ArrayAdapter<Integer>(
-                this, android.R.layout.simple_spinner_item, fatherArray);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        fatherSp.setAdapter(adapter3);
-        position = adapter3.getPosition(piggy.getIdFather());
+        fatherSp.setAdapter(adapterFather);
+        position = adapterFather.getPosition(piggy.getIdFather());
         fatherSp.setSelection(position);
 
-        List<String> spinnerArray =  new ArrayList<String>();
-        try {
-            spinnerArray.addAll(myDbFeed.getAllFeedNames());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, spinnerArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        feed_spinner.setAdapter(adapter);
-        int spinnerLocation = adapter.getPosition(piggy.getFeed());
+        feed_spinner.setAdapter(adapterFeed);
+        int spinnerLocation = adapterFeed.getPosition(piggy.getFeed());
         feed_spinner.setSelection(spinnerLocation);
-///////////////////////////
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(piggy.getDateOfBirth());
         int year = calendar.get(Calendar.YEAR);
@@ -175,60 +151,38 @@ public class EditPigActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                EditText pig_wight = (EditText) findViewById(R.id.pig_wight);
-                RadioGroup radio_grp = (RadioGroup) findViewById(R.id.radio_pregnant);
-                RadioButton pig_pregnantY = (RadioButton) findViewById(R.id.radio_yes);
-                RadioButton pig_pregnantN = (RadioButton) findViewById(R.id.radio_no);
-                Spinner feed_spinner = (Spinner) findViewById(R.id.feed_spinner);
-                Spinner fatherSp = (Spinner) findViewById(R.id.spinnerFather);
-                Spinner motherSp = (Spinner) findViewById(R.id.spinnerMother);
-                DatePicker pig_dateOfBirth = (DatePicker) findViewById(R.id.pig_dateOfBirth);
+            if(!extra_oneE.getText().toString().equals("") && !extra_twoE.getText().toString().equals("") && !extra_threeE.getText().toString().equals("")){
 
-                EditText extra_oneE = (EditText) findViewById(R.id.extra_oneE);
-                EditText extra_twoE = (EditText) findViewById(R.id.extra_twoE);
-                EditText extra_threeE = (EditText) findViewById(R.id.extra_threeE);
+                piggy.setWeight(Integer.parseInt(pig_weight.getText().toString()));
+                piggy.setFeed(feed_spinner.getSelectedItem().toString());
+                piggy.setDateOfBirthCalendar(pig_dateOfBirth.getYear(),pig_dateOfBirth.getMonth(),pig_dateOfBirth.getDayOfMonth());
+                piggy.setIdFather(Integer.parseInt(fatherSp.getSelectedItem().toString()));
+                piggy.setIdMother(Integer.parseInt(motherSp.getSelectedItem().toString()));
 
-                if(!extra_oneE.getText().toString().equals("") && !extra_twoE.getText().toString().equals("") && !extra_threeE.getText().toString().equals("")){
+                if(piggy instanceof Sow){
+                    Sow sow = (Sow) piggy;
+                    sow.setPregnant((pig_pregnantY.isChecked()) ? 1 : 0);
 
-                    piggy.setWeight(Integer.parseInt(pig_wight.getText().toString()));
-                    piggy.setFeed(feed_spinner.getSelectedItem().toString());
-                    int year = pig_dateOfBirth.getYear();
-                    int month = pig_dateOfBirth.getMonth();
-                    int day = pig_dateOfBirth.getDayOfMonth();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.set(year,month,day);
-                    piggy.setDateOfBirth(calendar.getTime());
-                    piggy.setIdFather(Integer.parseInt(fatherSp.getSelectedItem().toString()));
-                    piggy.setIdMother(Integer.parseInt(motherSp.getSelectedItem().toString()));
-                    if(piggy instanceof Sow){
-                        Sow sow = (Sow) piggy;
-                        if(pig_pregnantY.isChecked()) {
-                            sow.setPregnant(1);
-                        }else{
-                            sow.setPregnant(0);
-                        }
-                        sow.setNumberOfBirths(Integer.parseInt(extra_oneE.getText().toString()));
-                        sow.setPrecentOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
-                        sow.setNumOfchildrenPerBirth(Double.parseDouble(extra_threeE.getText().toString()));
-                        myDb.updatePig(sow);
-                        myDb.close();
-                        startActivity(intent);
-                    }else{
-                        Hog hog = (Hog) piggy;
-                        String str = extra_oneE.getText().toString();
-                        hog.setPercentageOfSuccPerpregnancys(Double.parseDouble(extra_oneE.getText().toString()));
-                        hog.setPercentageOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
-                        str = extra_threeE.getText().toString();
-                        hog.setNumOfChildrenPerPregnancy(Integer.parseInt(extra_threeE.getText().toString()));
-                        myDb.updatePig(hog);
-                        myDb.close();
-                        startActivity(intent);
-                    }
+                    sow.setNumberOfBirths(Integer.parseInt(extra_oneE.getText().toString()));
+                    sow.setPrecentOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
+                    sow.setNumOfchildrenPerBirth(Double.parseDouble(extra_threeE.getText().toString()));
+                    myDb.updatePig(sow);
+                    myDb.close();
+                    startActivity(intent);
                 }else{
-                    Toast msg = Toast.makeText(cntx, "Fill all the fields", Toast.LENGTH_SHORT);
-                    msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                    msg.show();
+                    Hog hog = (Hog) piggy;
+                    hog.setPercentageOfSuccPerpregnancys(Double.parseDouble(extra_oneE.getText().toString()));
+                    hog.setPercentageOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
+                    hog.setNumOfChildrenPerPregnancy(Integer.parseInt(extra_threeE.getText().toString()));
+                    myDb.updatePig(hog);
+                    myDb.close();
+                    startActivity(intent);
                 }
+            }else{
+                Toast msg = Toast.makeText(cntx, "Fill all the fields", Toast.LENGTH_SHORT);
+                msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
+                msg.show();
+            }
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
