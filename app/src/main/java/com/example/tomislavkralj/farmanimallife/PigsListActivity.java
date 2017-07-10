@@ -28,18 +28,18 @@ public class PigsListActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pigs_list);
-        sowListView = (ListView) findViewById(R.id.pigs_list_view);
 
-        List<Pig> allPigs = new ArrayList<>();
-        MyDbHelper myDbHelper = new MyDbHelper(this);
+        sowListView = (ListView) findViewById(R.id.pigs_list_view);
+        MyDbHelper myDb = new MyDbHelper(this);
+        PigAdapter adapter = null;
+
         try {
-            allPigs.addAll(myDbHelper.getAllPigs());
+            adapter = new PigAdapter(this, (ArrayList<Pig>) myDb.getAllPigs());
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        PigAdapter adapter = new PigAdapter(this, (ArrayList<Pig>) allPigs);
         sowListView.setAdapter(adapter);
-        myDbHelper.close();
+        myDb.close();
     }
 
     public void addNewPig(View view){
@@ -49,12 +49,13 @@ public class PigsListActivity extends AppCompatActivity{
 
     public void showPigDetails(View view) throws ParseException {
         Intent intent = new Intent(this, PigsDetailsActivity.class);
+
         MyDbHelper myDb = new MyDbHelper(this);
         RelativeLayout parent = (RelativeLayout) view.getParent();
         TextView id = (TextView) parent.getChildAt(0);
         String str = id.getText().toString();
-        str = str.substring(4);
-        int i = Integer.parseInt(str);
+
+        int i = Integer.parseInt(str.substring(4));
 
         Pig pig = myDb.getPig(i);
 
@@ -70,14 +71,13 @@ public class PigsListActivity extends AppCompatActivity{
 
     public void deletePig(View view){
 
-
         final Intent intent = new Intent(this, PigsListActivity.class);
         final MyDbHelper myDb = new MyDbHelper(this);
         RelativeLayout parent = (RelativeLayout) view.getParent();
         TextView id = (TextView) parent.getChildAt(0);
         String str = id.getText().toString();
-        str = str.substring(4);
-        final int i = Integer.parseInt(str);
+        final int i = Integer.parseInt(str.substring(4));
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Delete the pig with ID number: " + i);
         builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {

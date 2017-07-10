@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Farm Animal Life</string>
+    <string name="weight">Weight: </string>
+    <string name="weightAndKg">Weight: %d kg</string>
+    <string name="weightOnlyKg">%d</string>
+    <string name="idAndID">ID: %d</string>
 </resources>

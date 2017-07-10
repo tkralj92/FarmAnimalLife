@@ -3,6 +3,7 @@ package com.example.tomislavkralj.farmanimallife;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
@@ -21,10 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
@@ -38,7 +36,7 @@ import butterknife.ButterKnife;
 public class EditPigActivity extends AppCompatActivity {
 
     private Pig piggy;
-    private MyDbHelper myDb = new MyDbHelper(this);
+
     private DecimalFormat numForm = new DecimalFormat("#.00");
 
     @BindView(R.id.pig_id) TextView pig_id;
@@ -71,8 +69,9 @@ public class EditPigActivity extends AppCompatActivity {
         ArrayAdapter<Integer> adapterMother = SpinnerAdapters.getAllMothersSpinnerAdapter(piggy, this);
         ArrayAdapter<Integer> adapterFather = SpinnerAdapters.getAllFathersSpinnerAdapter(piggy, this);
         ArrayAdapter<String> adapterFeed = SpinnerAdapters.getAllFeedSpinnerAdapter(this);
+        Resources res = getResources();
 
-        pig_id.setText(Integer.toString(piggy.getId()));
+        pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
         if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
             glavniLay.setBackgroundColor(Color.parseColor("#ffb6c1"));
@@ -81,7 +80,7 @@ public class EditPigActivity extends AppCompatActivity {
             glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
         }
 
-        pig_weight.setText(Integer.toString(piggy.getWeight()));
+        pig_weight.setText(res.getString(R.string.weightOnlyKg, piggy.getWeight()));
 
         motherSp.setAdapter(adapterMother);
         position = adapterMother.getPosition(piggy.getIdMother());
@@ -102,7 +101,6 @@ public class EditPigActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         pig_dateOfBirth.updateDate(year,month,day);
 
-/////musko zenski dio
         if(piggy instanceof Hog) {
             Hog hog = (Hog) piggy;
             radio_grp.setVisibility(View.INVISIBLE);
@@ -135,7 +133,6 @@ public class EditPigActivity extends AppCompatActivity {
 
             extra_three.setText("Piglets/\nBirth: ");
             extra_threeE.setText(String.valueOf(sow.getNumOfchildrenPerBirth()));
-
         }
     }
 

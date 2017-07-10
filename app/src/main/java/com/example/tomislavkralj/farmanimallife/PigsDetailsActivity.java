@@ -39,7 +39,7 @@ public class PigsDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.pig_id) TextView pig_id;
     @BindView(R.id.gender) ImageView pig_gender;
-    @BindView(R.id.pig_weight) EditText pig_weight;
+    @BindView(R.id.pig_weight) TextView pig_weight;
     @BindView(R.id.pig_pregnant) TextView pig_pregnant;
     @BindView(R.id.pig_feed_name) TextView pig_feed_name;
     @BindView(R.id.pig_dateOfBirth) TextView pig_dateOfBirth;
@@ -60,12 +60,6 @@ public class PigsDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         piggy = intent.getExtras().getParcelable("OBJEKT");
-
-
-
-
-
-
 
         if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
