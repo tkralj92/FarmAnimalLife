@@ -1,16 +1,12 @@
 package com.example.tomislavkralj.calculator;
 
 import android.content.Context;
-import android.database.Cursor;
 
-import com.example.tomislavkralj.animals.Feed;
+import com.example.tomislavkralj.feed.Feed;
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
-import com.example.tomislavkralj.dbSqlite.DbConverter;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
-
-import java.text.ParseException;
 
 public class PigCalculator {
 

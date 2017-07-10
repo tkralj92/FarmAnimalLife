@@ -2,7 +2,6 @@ package com.example.tomislavkralj.farmanimallife;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,12 +13,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tomislavkralj.animals.Feed;
-import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
-import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.calculator.PigCalculator;
-import com.example.tomislavkralj.dbSqlite.DbConverter;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
 import java.text.ParseException;

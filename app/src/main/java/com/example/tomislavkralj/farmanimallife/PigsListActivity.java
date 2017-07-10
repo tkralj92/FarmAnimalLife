@@ -2,7 +2,6 @@ package com.example.tomislavkralj.farmanimallife;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,10 +14,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.tomislavkralj.adapters.PigAdapter;
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
-import com.example.tomislavkralj.dbSqlite.DbConverter;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
 public class PigsListActivity extends AppCompatActivity{

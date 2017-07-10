@@ -5,10 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.tomislavkralj.animals.Feed;
+import com.example.tomislavkralj.feed.Feed;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
-
-import java.text.ParseException;
 
 public class MainActivity extends AppCompatActivity {
 

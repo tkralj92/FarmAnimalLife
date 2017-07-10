@@ -2,7 +2,7 @@ package com.example.tomislavkralj.dbSqlite;
 
 import android.database.Cursor;
 
-import com.example.tomislavkralj.animals.Feed;
+import com.example.tomislavkralj.feed.Feed;
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
@@ -10,7 +10,6 @@ import com.example.tomislavkralj.animals.Sow;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 

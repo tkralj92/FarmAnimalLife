@@ -1,4 +1,4 @@
-package com.example.tomislavkralj.farmanimallife;
+package com.example.tomislavkralj.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.example.tomislavkralj.animals.Pig;
+import com.example.tomislavkralj.farmanimallife.R;
 
 
 /**
