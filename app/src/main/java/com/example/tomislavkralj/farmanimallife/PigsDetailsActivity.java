@@ -1,6 +1,7 @@
 package com.example.tomislavkralj.farmanimallife;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
@@ -60,6 +61,7 @@ public class PigsDetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         piggy = intent.getExtras().getParcelable("OBJEKT");
+        Resources res = getResources();
 
         if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
@@ -70,15 +72,16 @@ public class PigsDetailsActivity extends AppCompatActivity {
             glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
             pig_edit.setImageResource(R.drawable.edit_write_icon_blue);
         }
-        pig_id.setText("ID: "+Integer.toString(piggy.getId()));
-        pig_weight.setText("Weight: "+Integer.toString(piggy.getWeight())+"kg");
-        pig_feed_name.setText("Feed: " +piggy.getFeed());
+        pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
+        pig_weight.setText(res.getString(R.string.weightAndKg, piggy.getWeight()));
+        pig_feed_name.setText(res.getString(R.string.feedAndFeedName, piggy.getFeed()));
+
         if(piggy instanceof Sow ) {
             Sow sow = (Sow) piggy;
             if(sow.isPregnant() == 0) {
-                pig_pregnant.setText("Pregnant: No");
+                pig_pregnant.setText(res.getString(R.string.pregNo));
             }else {
-                pig_pregnant.setText("Pregnant: Yes");
+                pig_pregnant.setText(res.getString(R.string.pregYes));
             }
             pig_numBirths.setText("Number of births: "+Integer.toString(sow.getNumberOfBirths()));
             pig_perMort.setText("Mortality rate: "+Double.toString(Math.round(sow.getPrecentOfMortality()*100.0))+"%");
@@ -91,13 +94,8 @@ public class PigsDetailsActivity extends AppCompatActivity {
             pig_numOfChilPerBirth.setText("Piglets/Pregnancy: "+Integer.toString(hog.getNumOfChildrenPerPregnancy()));
 
         }
-        Date date = piggy.getDateOfBirth();
 
-        if(date.equals(null) || date.equals("")){
-            pig_dateOfBirth.setText("Date of birth: " );
-        }else{
-            pig_dateOfBirth.setText("Date of birth: " + sdf.format(piggy.getDateOfBirth()));
-        }
+        pig_dateOfBirth.setText("Date of birth: " + sdf.format(piggy.getDateOfBirth()));
         pig_Father.setText("Father ID: "+Integer.toString(piggy.getIdFather()));
         pig_Mother.setText("Mother ID: "+Integer.toString(piggy.getIdMother()));
     }
@@ -114,11 +112,7 @@ public class PigsDetailsActivity extends AppCompatActivity {
 
         Pig pig = myDb.getPig(i);
 
-        if(pig.isGender()){
-            intent.putExtra("OBJEKT", (Sow)pig);
-        }else{
-            intent.putExtra("OBJEKT", (Hog)pig);
-        }
+        intent.putExtra("OBJEKT", (pig.isGender()) ? (Sow)pig : (Hog)pig);
         startActivity(intent);
     }
 

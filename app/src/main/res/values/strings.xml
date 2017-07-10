@@ -4,4 +4,7 @@
     <string name="weightAndKg">Weight: %d kg</string>
     <string name="weightOnlyKg">%d</string>
     <string name="idAndID">ID: %d</string>
+    <string name="feedAndFeedName">Feed: %s</string>
+    <string name="pregNo">Pregnant: NO</string>
+    <string name="pregYes">Pregnant: YES</string>
 </resources>
