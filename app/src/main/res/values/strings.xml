@@ -36,8 +36,6 @@
     <string name="pigPerBirNumL">Piglets/Pregnancy: %.1f</string>
     <string name="pigPerBirNumLInt">Piglets/Pregnancy: %d</string>
 
-
-
     <string name="alertDiaSaveCh">Do you want to save the changes?</string>
     <string name="alertDeletePig">Delete the pig with ID number: %d</string>
 
