@@ -7,4 +7,15 @@
     <string name="feedAndFeedName">Feed: %s</string>
     <string name="pregNo">Pregnant: NO</string>
     <string name="pregYes">Pregnant: YES</string>
+    <string name="succPreg">Succesful\npregnancies (%)</string>
+    <string name="mortRate">Mortality \nrate (%)</string>
+    <string name="pigPerBir">Piglets/\nPregnancy:</string>
+    <string name="mortRateNum">%.0f</string>
+    <string name="pigPerBirNum">%.1f</string>
+    <string name="alertDiaSaveCh">Do you want to save the changes?</string>
+    <string name="toastFill">Fill all the fields</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+
 </resources>

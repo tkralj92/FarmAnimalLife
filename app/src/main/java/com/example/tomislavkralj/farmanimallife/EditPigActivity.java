@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,6 +29,7 @@ import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 import com.example.tomislavkralj.adapters.SpinnerAdapters;
+import com.example.tomislavkralj.toasts.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
 public class EditPigActivity extends AppCompatActivity {
 
     private Pig piggy;
-
+    private Resources res = getResources();
     private DecimalFormat numForm = new DecimalFormat("#.00");
 
     @BindView(R.id.pig_id) TextView pig_id;
@@ -74,10 +75,10 @@ public class EditPigActivity extends AppCompatActivity {
         pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
         if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
-            glavniLay.setBackgroundColor(Color.parseColor("#ffb6c1"));
+            glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyPink));
         }else{
             pig_gender.setImageResource(R.drawable.male_sign_blue);
-            glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
+            glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyBlue));
         }
 
         pig_weight.setText(res.getString(R.string.weightOnlyKg, piggy.getWeight()));
@@ -104,18 +105,22 @@ public class EditPigActivity extends AppCompatActivity {
         if(piggy instanceof Hog) {
             Hog hog = (Hog) piggy;
             radio_grp.setVisibility(View.INVISIBLE);
-            extra_one.setText("Succesful\npregnancies (%) ");
-            extra_oneE.setText(String.valueOf(numForm.format(hog.getPercentageOfSuccPerpregnancys())));
+            extra_one.setText(res.getString(R.string.succPreg));
             if(hog.getPercentageOfSuccPerpregnancys()<1){
                 extra_oneE.setText("0");
+            }else{
+                extra_oneE.setText(String.valueOf(numForm.format(hog.getPercentageOfSuccPerpregnancys())));
             }
 
-            extra_two.setText("Mortality \nrate: (%)");
-            extra_twoE.setText(String.valueOf(Math.round(hog.getPercentageOfMortality()*100.0)));
+            extra_two.setText(res.getString(R.string.mortRate));
+            extra_twoE.setText(res.getString(R.string.mortRateNum, hog.getPercentageOfMortality()*100.0));
 
-            extra_three.setText("Piglets/\nPregnancy: ");
-            extra_threeE.setText(String.valueOf(hog.getNumOfChildrenPerPregnancy()));
-
+            extra_three.setText(res.getString(R.string.pigPerBir));
+            if(hog.getNumOfChildrenPerPregnancy()==0) {
+                extra_threeE.setText(res.getString(R.string.pigPerBirNum,hog.getNumOfChildrenPerPregnancy()));
+            }else {
+                extra_threeE.setText("0");
+            }
         }else{
             Sow sow = (Sow) piggy;
             radio_grp.setEnabled(true);
@@ -125,14 +130,14 @@ public class EditPigActivity extends AppCompatActivity {
                 pig_pregnantY.setChecked(true);
             }
 
-            extra_one.setText("Number\nof births");
+            extra_one.setText(res.getString(R.string.succPreg));
             extra_oneE.setText(String.valueOf(sow.getNumberOfBirths()));
 
-            extra_two.setText("Mortality \nrate: (%)");
-            extra_twoE.setText(String.valueOf(Math.round(sow.getPrecentOfMortality()*100.0)));
+            extra_two.setText(res.getString(R.string.mortRate));
+            extra_twoE.setText(res.getString(R.string.mortRateNum,sow.getPrecentOfMortality()*100.0));
 
-            extra_three.setText("Piglets/\nBirth: ");
-            extra_threeE.setText(String.valueOf(sow.getNumOfchildrenPerBirth()));
+            extra_three.setText(res.getString(R.string.pigPerBir));
+            extra_threeE.setText(res.getString(R.string.pigPerBirNum, (sow.getNumOfchildrenPerBirth())));
         }
     }
 
@@ -143,8 +148,8 @@ public class EditPigActivity extends AppCompatActivity {
         final MyDbHelper myDb = new MyDbHelper(this);
         final Context context = this;
 
-        builder.setMessage("Do you want to save the changes?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setMessage(res.getString(R.string.alertDiaSaveCh));
+        builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
@@ -159,7 +164,6 @@ public class EditPigActivity extends AppCompatActivity {
                 if(piggy instanceof Sow){
                     Sow sow = (Sow) piggy;
                     sow.setPregnant((pig_pregnantY.isChecked()) ? 1 : 0);
-
                     sow.setNumberOfBirths(Integer.parseInt(extra_oneE.getText().toString()));
                     sow.setPrecentOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
                     sow.setNumOfchildrenPerBirth(Double.parseDouble(extra_threeE.getText().toString()));
@@ -176,13 +180,11 @@ public class EditPigActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             }else{
-                Toast msg = Toast.makeText(context, "Fill all the fields", Toast.LENGTH_SHORT);
-                msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                msg.show();
+                CustomToast.fillAllFields(context);
             }
             }
         });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 myDb.close();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.calculator.PigCalculator;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
+import com.example.tomislavkralj.toasts.CustomToast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -76,9 +77,7 @@ public class CalculationActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         if(feed_kg.getText().toString().equals("") || pig_new_weight.getText().toString().equals("")) {
-            Toast msg = Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            msg.show();
+            CustomToast.fillAllFields(this);
             return;
         }
         if(wantedWeight < piggy.getWeight()){

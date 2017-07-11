@@ -1,6 +1,7 @@
 package com.example.tomislavkralj.farmanimallife;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -20,13 +21,14 @@ import java.util.List;
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
+import com.example.tomislavkralj.toasts.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddNewPigActivity extends AppCompatActivity {
 
-
+    private Resources res = getResources();
     MyDbHelper myDb = new MyDbHelper(this);
     @BindView(R.id.pig_weight) EditText pig_weight;
     @BindView(R.id.spinnerFather) Spinner fatherSp;
@@ -84,14 +86,10 @@ public class AddNewPigActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, PigsListActivity.class);
                 startActivity(intent);
             } else {
-                Toast msg = Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT);
-                msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-                msg.show();
+                CustomToast.fillAllFields(this);
             }
         }else {
-            Toast msg = Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            msg.show();
+            CustomToast.fillAllFields(this);
         }
     }
 }
