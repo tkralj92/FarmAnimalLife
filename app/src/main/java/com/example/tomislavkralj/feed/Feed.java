@@ -1,4 +1,4 @@
-package com.example.tomislavkralj.animals;
+package com.example.tomislavkralj.feed;
 
 /**
  * Created by tomislav.kralj on 29.5.2017..

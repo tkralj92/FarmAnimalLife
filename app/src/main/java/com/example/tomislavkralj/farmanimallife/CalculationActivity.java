@@ -2,7 +2,7 @@ package com.example.tomislavkralj.farmanimallife;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -14,13 +14,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tomislavkralj.animals.Feed;
-import com.example.tomislavkralj.animals.Hog;
+import com.example.tomislavkralj.adapters.SpinnerAdapters;
 import com.example.tomislavkralj.animals.Pig;
-import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.calculator.PigCalculator;
-import com.example.tomislavkralj.dbSqlite.DbConverter;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
+import com.example.tomislavkralj.toasts.CustomToast;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -50,21 +48,13 @@ public class CalculationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calculation);
         ButterKnife.bind(this);
 
-        List<String> allFeed = new ArrayList<String>();
+        Resources res = getResources();
         Intent intent = getIntent();
         piggy = intent.getExtras().getParcelable("OBJEKT");
-        pig_weight.setText("Pig weight is: " + Integer.toString(piggy.getWeight()));
+        ArrayAdapter<String> feedAdapter = SpinnerAdapters.getAllFeedSpinnerAdapter(this);
 
-        try {
-            allFeed = myDb.getAllFeedNames();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_spinner_item, allFeed);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        pig_feed.setAdapter(adapter);
+        pig_weight.setText(res.getString(R.string.weightIs, piggy.getWeight()));
+        pig_feed.setAdapter(feedAdapter);
     }
 
     public void Calculate(View view) {
@@ -81,15 +71,11 @@ public class CalculationActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         if(feed_kg.getText().toString().equals("") || pig_new_weight.getText().toString().equals("")) {
-            Toast msg = Toast.makeText(this, "Fill all the fields", Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            msg.show();
+            CustomToast.fillAllFields(this);
             return;
         }
         if(wantedWeight < piggy.getWeight()){
-            Toast msg = Toast.makeText(this, "Wanted weight must be higher than actual weight!", Toast.LENGTH_SHORT);
-            msg.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0);
-            msg.show();
+            CustomToast.higerWantedWeight(this);
             return;
         }
 

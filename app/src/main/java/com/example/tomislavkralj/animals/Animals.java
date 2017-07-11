@@ -2,6 +2,7 @@ package com.example.tomislavkralj.animals;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -67,6 +68,12 @@ public abstract class Animals{
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setDateOfBirthCalendar(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        setDateOfBirth(calendar.getTime());
     }
 
     public String getFeed() {

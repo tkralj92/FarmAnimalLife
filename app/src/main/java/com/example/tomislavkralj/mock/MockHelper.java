@@ -1,4 +1,8 @@
-package com.example.tomislavkralj.animals;
+package com.example.tomislavkralj.mock;
+
+import com.example.tomislavkralj.animals.Hog;
+import com.example.tomislavkralj.animals.Pig;
+import com.example.tomislavkralj.animals.Sow;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

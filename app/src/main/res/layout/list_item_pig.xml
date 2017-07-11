@@ -42,7 +42,6 @@
         android:layout_marginRight="8dp"
         android:gravity="center_vertical"
         android:textSize="18dp"
-
         tools:text="Title"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/pig_list_gender"
