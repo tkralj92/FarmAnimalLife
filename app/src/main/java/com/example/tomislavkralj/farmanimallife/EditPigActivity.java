@@ -67,7 +67,6 @@ public class EditPigActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterFeed = SpinnerAdapters.getAllFeedSpinnerAdapter(this);
         Resources res = getResources();
 
-
         pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
 
         if(piggy.isGender()){

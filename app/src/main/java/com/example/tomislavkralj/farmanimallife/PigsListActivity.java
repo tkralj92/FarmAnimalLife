@@ -52,10 +52,11 @@ public class PigsListActivity extends AppCompatActivity{
         Intent intent = new Intent(this, PigsDetailsActivity.class);
         MyDbHelper myDb = new MyDbHelper(this);
 
-
-        TextView id = (TextView) findViewById(R.id.pig_id);
+        RelativeLayout parent = (RelativeLayout) view.getParent();
+        TextView id = (TextView) parent.findViewById(R.id.pig_id);
         String str = id.getText().toString();
-        final int i = Integer.parseInt(str.substring(4));
+        str = str.substring(4);
+        int i = Integer.parseInt(str);
 
         Pig pig = myDb.getPig(i);
 
@@ -75,9 +76,11 @@ public class PigsListActivity extends AppCompatActivity{
         final MyDbHelper myDb = new MyDbHelper(this);
         Resources res = getResources();
 
-        TextView id = (TextView) findViewById(R.id.pig_id);
+        RelativeLayout parent = (RelativeLayout) view.getParent();
+        TextView id = (TextView) parent.findViewById(R.id.pig_id);
         String str = id.getText().toString();
-        final int i = Integer.parseInt(str.substring(4));
+        str = str.substring(4);
+        final int i = Integer.parseInt(str);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(res.getString(R.string.alertDeletePig, i));

@@ -102,16 +102,9 @@ public class PigsDetailsActivity extends AppCompatActivity {
 
     public void editPig(View view) throws ParseException {
         Intent intent = new Intent(this, EditPigActivity.class);
-        MyDbHelper myDb = new MyDbHelper(this);
-
-        /*TextView id = (TextView) findViewById(R.id.pig_id);
-        String str = id.getText().toString();
-        str = str.substring(4);
-        int i = Integer.parseInt(str);
-
-        Pig pig = myDb.getPig(i);*/
 
         intent.putExtra("OBJEKT", (piggy.isGender()) ? (Sow)piggy : (Hog)piggy);
+
         startActivity(intent);
     }
 
