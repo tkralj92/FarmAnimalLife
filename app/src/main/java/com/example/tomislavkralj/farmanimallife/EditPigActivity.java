@@ -112,7 +112,7 @@ public class EditPigActivity extends AppCompatActivity {
 
             extra_three.setText(res.getString(R.string.pigPerBir));
             if(hog.getNumOfChildrenPerPregnancy()==0) {
-                extra_threeE.setText(res.getString(R.string.pigPerBirNum,hog.getNumOfChildrenPerPregnancy()));
+                extra_threeE.setText(res.getString(R.string.pigPerBirNumInt,hog.getNumOfChildrenPerPregnancy()));
             }else {
                 extra_threeE.setText("0");
             }

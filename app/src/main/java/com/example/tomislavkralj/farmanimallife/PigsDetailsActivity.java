@@ -84,15 +84,15 @@ public class PigsDetailsActivity extends AppCompatActivity {
             }else {
                 pig_pregnant.setText(res.getString(R.string.pregYes));
             }
-            pig_numBirths.setText(res.getString(R.string.numOfBirthsNumL,sow.getNumberOfBirths()));
-            pig_perMort.setText(res.getString(R.string.mortRateNumPrec, sow.getPrecentOfMortality()*100.0));
+            pig_numBirths.setText(res.getString(R.string.numOfBirthsNumLInt,sow.getNumberOfBirths()));
+            pig_perMort.setText(res.getString(R.string.mortRateNumPrec, sow.getPrecentOfMortality()*100.0)+getString(R.string.perc));
             pig_numOfChilPerBirth.setText(res.getString(R.string.pigPerBirNumL, sow.getNumOfchildrenPerBirth()));
         }else{
             Hog hog = (Hog) piggy;
             pig_pregnant.setVisibility(View.INVISIBLE);
-            pig_numBirths.setText(res.getString(R.string.succPregNumL, hog.getPercentageOfSuccPerpregnancys()));
-            pig_perMort.setText(res.getString(R.string.mortRateNumPrec,hog.getPercentageOfMortality()*100.0));
-            pig_numOfChilPerBirth.setText(res.getString(R.string.pigPerBirNumL, hog.getNumOfChildrenPerPregnancy()));
+            pig_numBirths.setText(res.getString(R.string.succPregNumL, hog.getPercentageOfSuccPerpregnancys())+getString(R.string.perc));
+            pig_perMort.setText(res.getString(R.string.mortRateNumPrec,hog.getPercentageOfMortality()*100.0)+getString(R.string.perc));
+            pig_numOfChilPerBirth.setText(res.getString(R.string.pigPerBirNumLInt, hog.getNumOfChildrenPerPregnancy()));
         }
 
         pig_dateOfBirth.setText(res.getString(R.string.DateOfBirthNum, sdf.format(piggy.getDateOfBirth())));

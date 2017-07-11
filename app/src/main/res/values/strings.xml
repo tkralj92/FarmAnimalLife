@@ -19,19 +19,23 @@
 
     <string name="succPreg">Succesful pregnancies (%)</string>
     <string name="succPregNum">%.0f</string>
-    <string name="succPregNumL">Succesful pregnancies: %.0f \%</string>
+    <string name="succPregNumL">Succesful pregnancies: %.0f </string>
 
     <string name="numOfBirths">Number of births: </string>
     <string name="numOfBirthsNum">%d</string>
-    <string name="numOfBirthsNumL">Number of births: %d</string>
+    <string name="numOfBirthsNumLInt">Number of births: %d</string>
+    <string name="numOfBirthsNumLDoub">Number of births: %.0f</string>
 
     <string name="mortRate">Mortality rate (%)</string>
     <string name="mortRateNum">%.0f</string>
-    <string name="mortRateNumPrec">Mortality rate: %.0f \%</string>
+    <string name="mortRateNumPrec">Mortality rate: %.0f</string>
 
     <string name="pigPerBir">Piglets/Pregnancy: </string>
     <string name="pigPerBirNum">%.1f</string>
+    <string name="pigPerBirNumInt">%d</string>
     <string name="pigPerBirNumL">Piglets/Pregnancy: %.1f</string>
+    <string name="pigPerBirNumLInt">Piglets/Pregnancy: %d</string>
+
 
 
     <string name="alertDiaSaveCh">Do you want to save the changes?</string>
@@ -44,4 +48,5 @@
     <string name="no">No</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="perc">%</string>
 </resources>
