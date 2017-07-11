@@ -28,7 +28,6 @@ import butterknife.ButterKnife;
 
 public class AddNewPigActivity extends AppCompatActivity {
 
-    private Resources res = getResources();
     MyDbHelper myDb = new MyDbHelper(this);
     @BindView(R.id.pig_weight) EditText pig_weight;
     @BindView(R.id.spinnerFather) Spinner fatherSp;
@@ -49,7 +48,6 @@ public class AddNewPigActivity extends AppCompatActivity {
                 this, android.R.layout.simple_spinner_item, motherArray);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         motherSp.setAdapter(adapter2);
-
 
         List<Integer> fatherArray = new ArrayList<>();
         fatherArray.addAll(myDb.getAllFathers(null));

@@ -2,6 +2,7 @@ package com.example.tomislavkralj.farmanimallife;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.example.tomislavkralj.adapters.PigAdapter;
 import com.example.tomislavkralj.animals.Hog;
@@ -22,14 +22,12 @@ import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
 public class PigsListActivity extends AppCompatActivity{
 
-    private ListView sowListView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pigs_list);
 
-        sowListView = (ListView) findViewById(R.id.pigs_list_view);
+        ListView sowListView = (ListView) findViewById(R.id.pigs_list_view);
         MyDbHelper myDb = new MyDbHelper(this);
         PigAdapter adapter = null;
 
@@ -77,10 +75,11 @@ public class PigsListActivity extends AppCompatActivity{
         TextView id = (TextView) parent.getChildAt(0);
         String str = id.getText().toString();
         final int i = Integer.parseInt(str.substring(4));
+        Resources res = getResources();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Delete the pig with ID number: " + i);
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setMessage(res.getString(R.string.alertDeletePig, i));
+        builder.setPositiveButton(res.getString(R.string.delete), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 myDb.deletePig(i);
@@ -88,7 +87,7 @@ public class PigsListActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(res.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 myDb.close();

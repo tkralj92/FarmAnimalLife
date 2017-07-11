@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -65,11 +66,11 @@ public class PigsDetailsActivity extends AppCompatActivity {
 
         if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
-            glavniLay.setBackgroundColor(Color.parseColor("#ffb6c1"));
+            glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyPink));
             pig_edit.setImageResource(R.drawable.edit_write_icon_pink);
         }else{
             pig_gender.setImageResource(R.drawable.male_sign_blue);
-            glavniLay.setBackgroundColor(Color.parseColor("#87CEFA"));
+            glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyBlue));
             pig_edit.setImageResource(R.drawable.edit_write_icon_blue);
         }
         pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
@@ -83,21 +84,20 @@ public class PigsDetailsActivity extends AppCompatActivity {
             }else {
                 pig_pregnant.setText(res.getString(R.string.pregYes));
             }
-            pig_numBirths.setText("Number of births: "+Integer.toString(sow.getNumberOfBirths()));
-            pig_perMort.setText("Mortality rate: "+Double.toString(Math.round(sow.getPrecentOfMortality()*100.0))+"%");
-            pig_numOfChilPerBirth.setText("Piglets/Birth: "+Double.toString(sow.getNumOfchildrenPerBirth()));
+            pig_numBirths.setText(res.getString(R.string.numOfBirthsNumL,sow.getNumberOfBirths()));
+            pig_perMort.setText(res.getString(R.string.mortRateNumPrec, sow.getPrecentOfMortality()*100.0));
+            pig_numOfChilPerBirth.setText(res.getString(R.string.pigPerBirNumL, sow.getNumOfchildrenPerBirth()));
         }else{
             Hog hog = (Hog) piggy;
             pig_pregnant.setVisibility(View.INVISIBLE);
-            pig_numBirths.setText("Percent of succesful pregnancys: "+Double.toString(Math.round(hog.getPercentageOfSuccPerpregnancys()))+"%");
-            pig_perMort.setText("Mortality rate: "+Double.toString(Math.round(hog.getPercentageOfMortality()*100.0))+"%");
-            pig_numOfChilPerBirth.setText("Piglets/Pregnancy: "+Integer.toString(hog.getNumOfChildrenPerPregnancy()));
-
+            pig_numBirths.setText(res.getString(R.string.succPregNumL, hog.getPercentageOfSuccPerpregnancys()));
+            pig_perMort.setText(res.getString(R.string.mortRateNumPrec,hog.getPercentageOfMortality()*100.0));
+            pig_numOfChilPerBirth.setText(res.getString(R.string.pigPerBirNumL, hog.getNumOfChildrenPerPregnancy()));
         }
 
-        pig_dateOfBirth.setText("Date of birth: " + sdf.format(piggy.getDateOfBirth()));
-        pig_Father.setText("Father ID: "+Integer.toString(piggy.getIdFather()));
-        pig_Mother.setText("Mother ID: "+Integer.toString(piggy.getIdMother()));
+        pig_dateOfBirth.setText(res.getString(R.string.DateOfBirthNum, sdf.format(piggy.getDateOfBirth())));
+        pig_Father.setText(res.getString(R.string.FatherIDNum, piggy.getIdFather()));
+        pig_Mother.setText(res.getString(R.string.MotherIDNum, piggy.getIdMother()));
     }
 
     public void editPig(View view) throws ParseException {

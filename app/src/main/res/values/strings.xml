@@ -1,21 +1,47 @@
 <resources>
     <string name="app_name">Farm Animal Life</string>
+
     <string name="weight">Weight: </string>
     <string name="weightAndKg">Weight: %d kg</string>
     <string name="weightOnlyKg">%d</string>
+    <string name="weightIs">Pig weight is: %d kg</string>
+
     <string name="idAndID">ID: %d</string>
+    <string name="FatherIDNum">Father ID: %d</string>
+    <string name="MotherIDNum">Mother ID: %d</string>
+
+    <string name="DateOfBirthNum">Date of birth: %s</string>
+
     <string name="feedAndFeedName">Feed: %s</string>
+
     <string name="pregNo">Pregnant: NO</string>
     <string name="pregYes">Pregnant: YES</string>
-    <string name="succPreg">Succesful\npregnancies (%)</string>
-    <string name="mortRate">Mortality \nrate (%)</string>
-    <string name="pigPerBir">Piglets/\nPregnancy:</string>
+
+    <string name="succPreg">Succesful pregnancies (%)</string>
+    <string name="succPregNum">%.0f</string>
+    <string name="succPregNumL">Succesful pregnancies: %.0f \%</string>
+
+    <string name="numOfBirths">Number of births: </string>
+    <string name="numOfBirthsNum">%d</string>
+    <string name="numOfBirthsNumL">Number of births: %d</string>
+
+    <string name="mortRate">Mortality rate (%)</string>
     <string name="mortRateNum">%.0f</string>
+    <string name="mortRateNumPrec">Mortality rate: %.0f \%</string>
+
+    <string name="pigPerBir">Piglets/Pregnancy: </string>
     <string name="pigPerBirNum">%.1f</string>
+    <string name="pigPerBirNumL">Piglets/Pregnancy: %.1f</string>
+
+
     <string name="alertDiaSaveCh">Do you want to save the changes?</string>
+    <string name="alertDeletePig">Delete the pig with ID number: %d</string>
+
     <string name="toastFill">Fill all the fields</string>
+    <string name="toastHigherWeight">Wanted weight must be higher than actual weight!</string>
+
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
-
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
 </resources>

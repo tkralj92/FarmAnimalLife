@@ -9,7 +9,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -19,9 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import com.example.tomislavkralj.animals.Hog;
@@ -37,8 +34,6 @@ import butterknife.ButterKnife;
 public class EditPigActivity extends AppCompatActivity {
 
     private Pig piggy;
-    private Resources res = getResources();
-    private DecimalFormat numForm = new DecimalFormat("#.00");
 
     @BindView(R.id.pig_id) TextView pig_id;
     @BindView(R.id.gender) ImageView pig_gender;
@@ -109,7 +104,7 @@ public class EditPigActivity extends AppCompatActivity {
             if(hog.getPercentageOfSuccPerpregnancys()<1){
                 extra_oneE.setText("0");
             }else{
-                extra_oneE.setText(String.valueOf(numForm.format(hog.getPercentageOfSuccPerpregnancys())));
+                extra_oneE.setText(res.getString(R.string.succPregNum));
             }
 
             extra_two.setText(res.getString(R.string.mortRate));
@@ -130,8 +125,8 @@ public class EditPigActivity extends AppCompatActivity {
                 pig_pregnantY.setChecked(true);
             }
 
-            extra_one.setText(res.getString(R.string.succPreg));
-            extra_oneE.setText(String.valueOf(sow.getNumberOfBirths()));
+            extra_one.setText(res.getString(R.string.numOfBirths));
+            extra_oneE.setText(res.getString(R.string.numOfBirthsNum,sow.getNumberOfBirths()));
 
             extra_two.setText(res.getString(R.string.mortRate));
             extra_twoE.setText(res.getString(R.string.mortRateNum,sow.getPrecentOfMortality()*100.0));
@@ -147,6 +142,7 @@ public class EditPigActivity extends AppCompatActivity {
         final Intent intent = new Intent(this, PigsListActivity.class);
         final MyDbHelper myDb = new MyDbHelper(this);
         final Context context = this;
+        Resources res = getResources();
 
         builder.setMessage(res.getString(R.string.alertDiaSaveCh));
         builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
