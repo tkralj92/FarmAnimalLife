@@ -1,5 +1,6 @@
 package com.example.tomislavkralj.farmanimallife;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -7,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,14 +48,14 @@ public class PigsListActivity extends AppCompatActivity{
     }
 
     public void showPigDetails(View view) throws ParseException {
+
         Intent intent = new Intent(this, PigsDetailsActivity.class);
-
         MyDbHelper myDb = new MyDbHelper(this);
-        RelativeLayout parent = (RelativeLayout) view.getParent();
-        TextView id = (TextView) parent.getChildAt(0);
-        String str = id.getText().toString();
 
-        int i = Integer.parseInt(str.substring(4));
+
+        TextView id = (TextView) findViewById(R.id.pig_id);
+        String str = id.getText().toString();
+        final int i = Integer.parseInt(str.substring(4));
 
         Pig pig = myDb.getPig(i);
 
@@ -71,11 +73,11 @@ public class PigsListActivity extends AppCompatActivity{
 
         final Intent intent = new Intent(this, PigsListActivity.class);
         final MyDbHelper myDb = new MyDbHelper(this);
-        RelativeLayout parent = (RelativeLayout) view.getParent();
-        TextView id = (TextView) parent.getChildAt(0);
+        Resources res = getResources();
+
+        TextView id = (TextView) findViewById(R.id.pig_id);
         String str = id.getText().toString();
         final int i = Integer.parseInt(str.substring(4));
-        Resources res = getResources();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(res.getString(R.string.alertDeletePig, i));
