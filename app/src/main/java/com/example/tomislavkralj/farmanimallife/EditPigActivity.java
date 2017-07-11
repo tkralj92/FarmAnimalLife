@@ -68,15 +68,6 @@ public class EditPigActivity extends AppCompatActivity {
         Intent intent = getIntent();
         piggy = intent.getExtras().getParcelable("OBJEKT");
 
-
-
-
-
-
-
-
-
-
         pig_id.setText(Integer.toString(piggy.getId()));
         if(piggy.isGender()){
             pig_gender.setImageResource(R.drawable.female_sign_pink);
