@@ -9,8 +9,16 @@
     <string name="idAndID">ID: %d</string>
     <string name="FatherIDNum">Father ID: %d</string>
     <string name="MotherIDNum">Mother ID: %d</string>
+    <string name="FatherID">Father ID: </string>
+    <string name="MotherID">Mother ID: </string>
 
     <string name="DateOfBirthNum">Date of birth: %s</string>
+    <string name="DateOfBirth">Date of birth: </string>
+
+    <string name="gender">Gender :</string>
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 
     <string name="feedAndFeedName">Feed: %s</string>
 
@@ -47,4 +55,6 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="perc">%</string>
+    <string name="addNewPig">ADD A NEW PIG</string>
+
 </resources>

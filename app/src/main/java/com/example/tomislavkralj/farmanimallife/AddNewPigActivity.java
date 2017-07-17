@@ -1,6 +1,8 @@
 package com.example.tomislavkralj.farmanimallife;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,12 +21,13 @@ import java.util.List;
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
+import com.example.tomislavkralj.fragments.DatePickerFragment;
 import com.example.tomislavkralj.toasts.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddNewPigActivity extends AppCompatActivity {
+public class AddNewPigActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     MyDbHelper myDb = new MyDbHelper(this);
     @BindView(R.id.pig_weight) EditText pig_weight;
@@ -32,12 +35,15 @@ public class AddNewPigActivity extends AppCompatActivity {
     @BindView(R.id.spinnerMother) Spinner motherSp;
     @BindView(R.id.pig_male) RadioButton pig_gender;
     @BindView(R.id.pig_female) RadioButton pig_genderF;
-    @BindView(R.id.datePicker2) DatePicker pig_date;
+    //@BindView(R.id.datePicker2) DatePicker pig_date;
+
+    private Date dateOfBirth = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_pig);
+        //setContentView(R.layout.activity_add_new_pig);
+        setContentView(R.layout.proba);
         ButterKnife.bind(this);
 
         List<Integer> motherArray = new ArrayList<>();
@@ -57,12 +63,12 @@ public class AddNewPigActivity extends AppCompatActivity {
 
     public void addNewPig(View view) {
 
-        int year = pig_date.getYear();
+        /*int year = pig_date.getYear();
         int month = pig_date.getMonth();
         int day = pig_date.getDayOfMonth();
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
-        Date dateOfBirth = (calendar.getTime());
+        Date dateOfBirth = (calendar.getTime());*/
 
         if (!pig_weight.getText().toString().equals("") ) {
             int dad  = Integer.parseInt(fatherSp.getSelectedItem().toString());
@@ -89,4 +95,15 @@ public class AddNewPigActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,dayOfMonth);
+        dateOfBirth = (calendar.getTime());
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
 }
