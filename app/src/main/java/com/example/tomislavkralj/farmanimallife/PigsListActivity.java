@@ -6,6 +6,8 @@ import android.content.res.Resources;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -15,6 +17,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import com.example.tomislavkralj.adapters.PigAdapter;
+import com.example.tomislavkralj.adapters.PigAdapterRecyclerView;
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
@@ -22,8 +25,29 @@ import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 
 public class PigsListActivity extends AppCompatActivity{
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        String[] myDataset = {"Maam","tata","deda"};
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyView);
+
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new PigAdapterRecyclerView(myDataset);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+
+        /*
+        /////OVO JE OBIČNI LISTVIEW
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pigs_list);
 
@@ -37,7 +61,7 @@ public class PigsListActivity extends AppCompatActivity{
             e.printStackTrace();
         }
         sowListView.setAdapter(adapter);
-        myDb.close();
+        myDb.close();*/
     }
 
     public void addNewPig(View view){

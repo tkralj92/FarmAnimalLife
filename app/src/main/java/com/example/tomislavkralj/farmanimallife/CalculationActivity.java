@@ -5,29 +5,20 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tomislavkralj.adapters.SpinnerAdapters;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.calculator.PigCalculator;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 import com.example.tomislavkralj.toasts.CustomToast;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import  static  butterknife.ButterKnife.findById;
 
 public class CalculationActivity extends AppCompatActivity {
 
@@ -45,7 +36,7 @@ public class CalculationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculation);
+        setContentView(R.layout.calculator_layout);
         ButterKnife.bind(this);
 
         Resources res = getResources();
@@ -53,7 +44,7 @@ public class CalculationActivity extends AppCompatActivity {
         piggy = intent.getExtras().getParcelable("OBJEKT");
         ArrayAdapter<String> feedAdapter = SpinnerAdapters.getAllFeedSpinnerAdapter(this);
 
-        pig_weight.setText(res.getString(R.string.weightIs, piggy.getWeight()));
+        pig_weight.setText(res.getString(R.string.weightIsNewLine, piggy.getWeight()));
         pig_feed.setAdapter(feedAdapter);
     }
 

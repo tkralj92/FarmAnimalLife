@@ -5,6 +5,7 @@
     <string name="weightAndKg">Weight: %d kg</string>
     <string name="weightOnlyKg">%d</string>
     <string name="weightIs">Pig weight is: %d kg</string>
+    <string name="weightIsNewLine">Pig weight is:\n %d kg</string>
 
     <string name="idAndID">ID: %d</string>
     <string name="FatherIDNum">Father ID: %d</string>
@@ -56,5 +57,7 @@
     <string name="cancel">Cancel</string>
     <string name="perc">%</string>
     <string name="addNewPig">ADD A NEW PIG</string>
+    <string name="calculate">CALCULATE</string>
+
 
 </resources>

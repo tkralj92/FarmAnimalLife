@@ -1,6 +1,5 @@
 package com.example.tomislavkralj.farmanimallife;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -35,15 +34,13 @@ public class AddNewPigActivity extends AppCompatActivity implements DatePickerDi
     @BindView(R.id.spinnerMother) Spinner motherSp;
     @BindView(R.id.pig_male) RadioButton pig_gender;
     @BindView(R.id.pig_female) RadioButton pig_genderF;
-    //@BindView(R.id.datePicker2) DatePicker pig_date;
 
     private Date dateOfBirth = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_add_new_pig);
-        setContentView(R.layout.proba);
+        setContentView(R.layout.add_new_pig_layout);
         ButterKnife.bind(this);
 
         List<Integer> motherArray = new ArrayList<>();
@@ -62,13 +59,6 @@ public class AddNewPigActivity extends AppCompatActivity implements DatePickerDi
     }
 
     public void addNewPig(View view) {
-
-        /*int year = pig_date.getYear();
-        int month = pig_date.getMonth();
-        int day = pig_date.getDayOfMonth();
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, day);
-        Date dateOfBirth = (calendar.getTime());*/
 
         if (!pig_weight.getText().toString().equals("") ) {
             int dad  = Integer.parseInt(fatherSp.getSelectedItem().toString());
