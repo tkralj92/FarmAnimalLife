@@ -139,7 +139,6 @@ public class EditPigActivity extends AppCompatActivity {
 
     public void savePigChanges(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         final Intent intent = new Intent(this, PigsListActivity.class);
         final MyDbHelper myDb = new MyDbHelper(this);
         final Context context = this;
@@ -149,36 +148,35 @@ public class EditPigActivity extends AppCompatActivity {
         builder.setPositiveButton(res.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if(!extra_oneE.getText().toString().equals("") && !extra_twoE.getText().toString().equals("") && !extra_threeE.getText().toString().equals("")){
 
-            if(!extra_oneE.getText().toString().equals("") && !extra_twoE.getText().toString().equals("") && !extra_threeE.getText().toString().equals("")){
+                    piggy.setWeight(Integer.parseInt(pig_weight.getText().toString()));
+                    piggy.setFeed(feed_spinner.getSelectedItem().toString());
+                    piggy.setDateOfBirthCalendar(pig_dateOfBirth.getYear(),pig_dateOfBirth.getMonth(),pig_dateOfBirth.getDayOfMonth());
+                    piggy.setIdFather(Integer.parseInt(fatherSp.getSelectedItem().toString()));
+                    piggy.setIdMother(Integer.parseInt(motherSp.getSelectedItem().toString()));
 
-                piggy.setWeight(Integer.parseInt(pig_weight.getText().toString()));
-                piggy.setFeed(feed_spinner.getSelectedItem().toString());
-                piggy.setDateOfBirthCalendar(pig_dateOfBirth.getYear(),pig_dateOfBirth.getMonth(),pig_dateOfBirth.getDayOfMonth());
-                piggy.setIdFather(Integer.parseInt(fatherSp.getSelectedItem().toString()));
-                piggy.setIdMother(Integer.parseInt(motherSp.getSelectedItem().toString()));
-
-                if(piggy instanceof Sow){
-                    Sow sow = (Sow) piggy;
-                    sow.setPregnant((pig_pregnantY.isChecked()) ? 1 : 0);
-                    sow.setNumberOfBirths(Integer.parseInt(extra_oneE.getText().toString()));
-                    sow.setPrecentOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
-                    sow.setNumOfchildrenPerBirth(Double.parseDouble(extra_threeE.getText().toString()));
-                    myDb.updatePig(sow);
-                    myDb.close();
-                    startActivity(intent);
+                    if(piggy instanceof Sow){
+                        Sow sow = (Sow) piggy;
+                        sow.setPregnant((pig_pregnantY.isChecked()) ? 1 : 0);
+                        sow.setNumberOfBirths(Integer.parseInt(extra_oneE.getText().toString()));
+                        sow.setPrecentOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
+                        sow.setNumOfchildrenPerBirth(Double.parseDouble(extra_threeE.getText().toString()));
+                        myDb.updatePig(sow);
+                        myDb.close();
+                        startActivity(intent);
+                    }else{
+                        Hog hog = (Hog) piggy;
+                        hog.setPercentageOfSuccPerpregnancys(Double.parseDouble(extra_oneE.getText().toString()));
+                        hog.setPercentageOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
+                        hog.setNumOfChildrenPerPregnancy(Integer.parseInt(extra_threeE.getText().toString()));
+                        myDb.updatePig(hog);
+                        myDb.close();
+                        startActivity(intent);
+                    }
                 }else{
-                    Hog hog = (Hog) piggy;
-                    hog.setPercentageOfSuccPerpregnancys(Double.parseDouble(extra_oneE.getText().toString()));
-                    hog.setPercentageOfMortality(Double.parseDouble(extra_twoE.getText().toString())/100.0);
-                    hog.setNumOfChildrenPerPregnancy(Integer.parseInt(extra_threeE.getText().toString()));
-                    myDb.updatePig(hog);
-                    myDb.close();
-                    startActivity(intent);
+                    CustomToast.fillAllFields(context);
                 }
-            }else{
-                CustomToast.fillAllFields(context);
-            }
             }
         });
         builder.setNegativeButton(res.getString(R.string.no), new DialogInterface.OnClickListener() {

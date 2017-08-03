@@ -35,7 +35,7 @@ public class AddNewPigActivity extends AppCompatActivity implements DatePickerDi
     @BindView(R.id.pig_male) RadioButton pig_gender;
     @BindView(R.id.pig_female) RadioButton pig_genderF;
 
-    private Date dateOfBirth = null;
+    private Date dateOfBirth = Calendar.getInstance().getTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +45,14 @@ public class AddNewPigActivity extends AppCompatActivity implements DatePickerDi
 
         List<Integer> motherArray = new ArrayList<>();
         motherArray.addAll(myDb.getAllMothers(null));
-        ArrayAdapter<Integer> adapter2 = new ArrayAdapter<Integer>(
+        ArrayAdapter<Integer> adapter2 = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, motherArray);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         motherSp.setAdapter(adapter2);
 
         List<Integer> fatherArray = new ArrayList<>();
         fatherArray.addAll(myDb.getAllFathers(null));
-        ArrayAdapter<Integer> adapter3 = new ArrayAdapter<Integer>(
+        ArrayAdapter<Integer> adapter3 = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, fatherArray);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fatherSp.setAdapter(adapter3);
@@ -60,7 +60,7 @@ public class AddNewPigActivity extends AppCompatActivity implements DatePickerDi
 
     public void addNewPig(View view) {
 
-        if (!pig_weight.getText().toString().equals("") ) {
+        if (!pig_weight.getText().toString().equals("")) {
             int dad  = Integer.parseInt(fatherSp.getSelectedItem().toString());
             int mom = Integer.parseInt(motherSp.getSelectedItem().toString());
 

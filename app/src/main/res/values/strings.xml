@@ -6,6 +6,8 @@
     <string name="weightOnlyKg">%d</string>
     <string name="weightIs">Pig weight is: %d kg</string>
     <string name="weightIsNewLine">Pig weight is:\n %d kg</string>
+    <string name="weightNumAndKg">%d kg</string>
+
 
     <string name="idAndID">ID: %d</string>
     <string name="FatherIDNum">Father ID: %d</string>
