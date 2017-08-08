@@ -107,8 +107,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/percentageOfMortality"
             android:textSize="18sp"
-            android:layout_marginTop="17dp"
-            android:text="TextView" />
+            android:layout_marginTop="20dp"
+            android:text="TextView"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

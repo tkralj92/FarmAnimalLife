@@ -50,12 +50,6 @@ public class CalculationActivity extends AppCompatActivity {
 
     public void Calculate(View view) {
 
-        PigCalculator pigCalc = new PigCalculator();
-        double pigWeight = piggy.getWeight();
-        String feedName = pig_feed.getSelectedItem().toString();
-        int wantedWeight = Integer.parseInt(pig_new_weight.getText().toString());
-        double feedKG = Double.parseDouble(feed_kg.getText().toString());
-
         View view1 = this.getCurrentFocus();
         if (view1 != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -65,6 +59,13 @@ public class CalculationActivity extends AppCompatActivity {
             CustomToast.fillAllFields(this);
             return;
         }
+
+        double pigWeight = piggy.getWeight();
+        String feedName = pig_feed.getSelectedItem().toString();
+        int wantedWeight = Integer.parseInt(pig_new_weight.getText().toString());
+        double feedKG = Double.parseDouble(feed_kg.getText().toString());
+        PigCalculator pigCalc = new PigCalculator();
+
         if(wantedWeight < piggy.getWeight()){
             CustomToast.higerWantedWeight(this);
             return;

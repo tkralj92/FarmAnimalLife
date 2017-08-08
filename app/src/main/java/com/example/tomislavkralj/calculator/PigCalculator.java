@@ -184,6 +184,6 @@ public class PigCalculator {
                 }
             }
         }
-        return ("Piglet per birth: " + Double.toString(pigsPerBirth));
+        return ("Piglet per birth: " + Double.toString(pigsPerBirth*100));
     }
 }

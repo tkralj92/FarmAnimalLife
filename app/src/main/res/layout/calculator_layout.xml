@@ -10,40 +10,49 @@
         android:id="@+id/pig_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="43dp"
         android:text="TextView"
         android:textColor="@android:color/black"
-        android:textSize="16sp"
-        app:layout_constraintHorizontal_bias="0.067"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/pig_NewWeight"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pig_mortality"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginTop="100dp"
-        android:text="TextView"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="75dp"
         android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calculate_button" />
 
     <TextView
         android:id="@+id/pig_time"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -52,25 +61,28 @@
 
     <TextView
         android:id="@+id/pig_piglet_per_birth"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginRight="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
         android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pig_mortality" />
 
     <Spinner
         android:id="@+id/feed_name"
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="30dp"
-        app:layout_constraintHorizontal_bias="0.08"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="29dp"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/feed_kg"
         app:layout_constraintTop_toBottomOf="@+id/pig_weight" />
@@ -84,7 +96,8 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="32dp" />
 
     <EditText
         android:id="@+id/feed_kg"
@@ -95,13 +108,14 @@
         android:ems="10"
         android:inputType="numberDecimal"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pig_NewWeight" />
+        app:layout_constraintTop_toBottomOf="@+id/pig_NewWeight"
+        android:layout_marginEnd="32dp" />
 
     <Button
         android:id="@+id/calculate_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="32dp"
         android:onClick="Calculate"
         android:text="@string/calculate"
         app:layout_constraintLeft_toLeftOf="parent"
