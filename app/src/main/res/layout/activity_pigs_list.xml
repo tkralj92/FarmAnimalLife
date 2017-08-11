@@ -40,13 +40,13 @@
             android:id="@+id/delete_pig_bttn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="34dp"
+            android:layout_marginRight="40dp"
             android:background="@android:color/background_dark"
             android:onClick="addNewPig"
-            android:layout_marginRight="40dp"
-            app:srcCompat="@drawable/add_new"
-            android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true" />
+            app:srcCompat="@drawable/add_new" />
 
         <TextView
             android:id="@+id/textView2"
