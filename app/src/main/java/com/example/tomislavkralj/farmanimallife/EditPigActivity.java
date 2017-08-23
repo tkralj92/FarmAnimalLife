@@ -38,9 +38,6 @@ public class EditPigActivity extends AppCompatActivity {
     @BindView(R.id.pig_id) TextView pig_id;
     @BindView(R.id.gender) ImageView pig_gender;
     @BindView(R.id.pig_weight)  EditText pig_weight;
-    @BindView(R.id.radio_pregnant) RadioGroup radio_grp;
-    @BindView(R.id.radio_yes) RadioButton pig_pregnantY;
-    @BindView(R.id.radio_no) RadioButton pig_pregnantN;
     @BindView(R.id.feed_spinner) Spinner feed_spinner;
     @BindView(R.id.pig_dateOfBirth) DatePicker pig_dateOfBirth;
     @BindView(R.id.spinnerFather) Spinner fatherSp;
@@ -56,7 +53,6 @@ public class EditPigActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_pig);
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
@@ -67,57 +63,15 @@ public class EditPigActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterFeed = SpinnerAdapters.getAllFeedSpinnerAdapter(this);
         Resources res = getResources();
 
-        pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
-
         if(piggy.isGender()){
+            setContentView(R.layout.activity_edit_female);
             pig_gender.setImageResource(R.drawable.female_sign_pink);
             glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyPink));
-        }else{
-            pig_gender.setImageResource(R.drawable.male_sign_blue);
-            glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyBlue));
-        }
 
-        pig_weight.setText(res.getString(R.string.weightOnlyKg, piggy.getWeight()));
+            RadioGroup radio_grp = (RadioGroup) findViewById(R.id.radio_pregnant);
+            RadioButton pig_pregnantY = (RadioButton) findViewById(R.id.radio_yes);
+            RadioButton pig_pregnantN = (RadioButton) findViewById(R.id.radio_no);
 
-        motherSp.setAdapter(adapterMother);
-        position = adapterMother.getPosition(piggy.getIdMother());
-        motherSp.setSelection(position);
-
-        fatherSp.setAdapter(adapterFather);
-        position = adapterFather.getPosition(piggy.getIdFather());
-        fatherSp.setSelection(position);
-
-        feed_spinner.setAdapter(adapterFeed);
-        int spinnerLocation = adapterFeed.getPosition(piggy.getFeed());
-        feed_spinner.setSelection(spinnerLocation);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(piggy.getDateOfBirth());
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        pig_dateOfBirth.updateDate(year,month,day);
-
-        if(piggy instanceof Hog) {
-            Hog hog = (Hog) piggy;
-            radio_grp.setVisibility(View.INVISIBLE);
-            extra_one.setText(res.getString(R.string.succPreg));
-            if(hog.getPercentageOfSuccPerpregnancys()<1){
-                extra_oneE.setText("0");
-            }else{
-                extra_oneE.setText(res.getString(R.string.succPregNum));
-            }
-
-            extra_two.setText(res.getString(R.string.mortRate));
-            extra_twoE.setText(res.getString(R.string.mortRateNum, hog.getPercentageOfMortality()*100.0));
-
-            extra_three.setText(res.getString(R.string.pigPerBir));
-            if(hog.getNumOfChildrenPerPregnancy()==0) {
-                extra_threeE.setText(res.getString(R.string.pigPerBirNumInt,hog.getNumOfChildrenPerPregnancy()));
-            }else {
-                extra_threeE.setText("0");
-            }
-        }else{
             Sow sow = (Sow) piggy;
             radio_grp.setEnabled(true);
             if(sow.isPregnant()==0){
@@ -134,7 +88,50 @@ public class EditPigActivity extends AppCompatActivity {
 
             extra_three.setText(res.getString(R.string.pigPerBir));
             extra_threeE.setText(res.getString(R.string.pigPerBirNum, (sow.getNumOfchildrenPerBirth())));
+        }else{
+            setContentView(R.layout.activity_edit_male);
+            pig_gender.setImageResource(R.drawable.male_sign_blue);
+            glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyBlue));
+
+            Hog hog = (Hog) piggy;
+            extra_one.setText(res.getString(R.string.succPreg));
+            if(hog.getPercentageOfSuccPerpregnancys()<1){
+                extra_oneE.setText("0");
+            }else{
+                extra_oneE.setText(res.getString(R.string.succPregNum));
+            }
+
+            extra_two.setText(res.getString(R.string.mortRate));
+            extra_twoE.setText(res.getString(R.string.mortRateNum, hog.getPercentageOfMortality()*100.0));
+
+            extra_three.setText(res.getString(R.string.pigPerBir));
+            if(hog.getNumOfChildrenPerPregnancy()==0) {
+                extra_threeE.setText(res.getString(R.string.pigPerBirNumInt,hog.getNumOfChildrenPerPregnancy()));
+            }else {
+                extra_threeE.setText("0");
+            }
         }
+        pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
+        pig_weight.setText(res.getString(R.string.weightOnlyKg, piggy.getWeight()));
+
+        motherSp.setAdapter(adapterMother);
+        position = adapterMother.getPosition(piggy.getIdMother());
+        motherSp.setSelection(position);
+
+        fatherSp.setAdapter(adapterFather);
+        position = adapterFather.getPosition(piggy.getIdFather());
+        fatherSp.setSelection(position);
+
+        feed_spinner.setAdapter(adapterFeed);
+        int spinnerLocation = adapterFeed.getPosition(piggy.getFeed());
+        feed_spinner.setSelection(spinnerLocation);
+
+        /*Calendar calendar = Calendar.getInstance();
+        calendar.setTime(piggy.getDateOfBirth());
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        pig_dateOfBirth.updateDate(year,month,day);*/
     }
 
     public void savePigChanges(View view){
