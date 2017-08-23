@@ -34,6 +34,7 @@ import butterknife.ButterKnife;
 public class EditPigActivity extends AppCompatActivity {
 
     private Pig piggy;
+    private RadioButton pig_pregnantY;
 
     @BindView(R.id.pig_id) TextView pig_id;
     @BindView(R.id.gender) ImageView pig_gender;
@@ -69,7 +70,7 @@ public class EditPigActivity extends AppCompatActivity {
             glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyPink));
 
             RadioGroup radio_grp = (RadioGroup) findViewById(R.id.radio_pregnant);
-            RadioButton pig_pregnantY = (RadioButton) findViewById(R.id.radio_yes);
+            pig_pregnantY = (RadioButton) findViewById(R.id.radio_yes);
             RadioButton pig_pregnantN = (RadioButton) findViewById(R.id.radio_no);
 
             Sow sow = (Sow) piggy;
