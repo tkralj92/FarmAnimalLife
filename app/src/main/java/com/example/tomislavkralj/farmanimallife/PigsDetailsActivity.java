@@ -80,7 +80,7 @@ public class PigsDetailsActivity extends AppCompatActivity {
             if(sow.isPregnant() == 0) {
                 pig_pregnantVal.setText(res.getString(R.string.no));
             }else {
-                pig_pregnant.setText(res.getString(R.string.yes));
+                pig_pregnantVal.setText(res.getString(R.string.yes));
             }
 
             pig_numBirths.setText(res.getString(R.string.numOfBirths));

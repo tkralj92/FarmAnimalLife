@@ -1,5 +1,7 @@
 package com.example.tomislavkralj.farmanimallife;
 
+import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,27 +23,30 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import com.example.tomislavkralj.animals.Hog;
 import com.example.tomislavkralj.animals.Pig;
 import com.example.tomislavkralj.animals.Sow;
 import com.example.tomislavkralj.dbSqlite.MyDbHelper;
 import com.example.tomislavkralj.adapters.SpinnerAdapters;
+import com.example.tomislavkralj.fragments.DatePickerFragment;
 import com.example.tomislavkralj.toasts.CustomToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EditPigActivity extends AppCompatActivity {
+public class EditPigActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     private Pig piggy;
     private RadioButton pig_pregnantY;
+    private Date dateOfBirth = Calendar.getInstance().getTime();
 
     @BindView(R.id.pig_id) TextView pig_id;
     @BindView(R.id.gender) ImageView pig_gender;
     @BindView(R.id.pig_weight)  EditText pig_weight;
     @BindView(R.id.feed_spinner) Spinner feed_spinner;
-    @BindView(R.id.pig_dateOfBirth) DatePicker pig_dateOfBirth;
+    @BindView(R.id.dateButton) Button pig_dateOfBirth;
     @BindView(R.id.spinnerFather) Spinner fatherSp;
     @BindView(R.id.spinnerMother) Spinner motherSp;
     @BindView(R.id.extra_oneE) EditText extra_oneE;
@@ -54,10 +60,11 @@ public class EditPigActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+
 
         Intent intent = getIntent();
         piggy = intent.getExtras().getParcelable("OBJEKT");
+        dateOfBirth = piggy.getDateOfBirth();
         int position;
         ArrayAdapter<Integer> adapterMother = SpinnerAdapters.getAllMothersSpinnerAdapter(piggy, this);
         ArrayAdapter<Integer> adapterFather = SpinnerAdapters.getAllFathersSpinnerAdapter(piggy, this);
@@ -66,6 +73,7 @@ public class EditPigActivity extends AppCompatActivity {
 
         if(piggy.isGender()){
             setContentView(R.layout.activity_edit_female);
+            ButterKnife.bind(this);
             pig_gender.setImageResource(R.drawable.female_sign_pink);
             glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyPink));
 
@@ -91,15 +99,17 @@ public class EditPigActivity extends AppCompatActivity {
             extra_threeE.setText(res.getString(R.string.pigPerBirNum, (sow.getNumOfchildrenPerBirth())));
         }else{
             setContentView(R.layout.activity_edit_male);
+            ButterKnife.bind(this);
             pig_gender.setImageResource(R.drawable.male_sign_blue);
             glavniLay.setBackgroundColor(ContextCompat.getColor(this, R.color.babyBlue));
 
+
             Hog hog = (Hog) piggy;
-            extra_one.setText(res.getString(R.string.succPreg));
+            extra_one.setText(res.getString(R.string.preg));
             if(hog.getPercentageOfSuccPerpregnancys()<1){
                 extra_oneE.setText("0");
             }else{
-                extra_oneE.setText(res.getString(R.string.succPregNum));
+                extra_oneE.setText(res.getString(R.string.succPregNum,hog.getPercentageOfSuccPerpregnancys()));
             }
 
             extra_two.setText(res.getString(R.string.mortRate));
@@ -109,7 +119,7 @@ public class EditPigActivity extends AppCompatActivity {
             if(hog.getNumOfChildrenPerPregnancy()==0) {
                 extra_threeE.setText(res.getString(R.string.pigPerBirNumInt,hog.getNumOfChildrenPerPregnancy()));
             }else {
-                extra_threeE.setText("0");
+                extra_threeE.setText(res.getString(R.string.pigPerBirNumInt, (hog.getNumOfChildrenPerPregnancy())));
             }
         }
         pig_id.setText(res.getString(R.string.idAndID, piggy.getId()));
@@ -150,7 +160,8 @@ public class EditPigActivity extends AppCompatActivity {
 
                     piggy.setWeight(Integer.parseInt(pig_weight.getText().toString()));
                     piggy.setFeed(feed_spinner.getSelectedItem().toString());
-                    piggy.setDateOfBirthCalendar(pig_dateOfBirth.getYear(),pig_dateOfBirth.getMonth(),pig_dateOfBirth.getDayOfMonth());
+                    piggy.setDateOfBirth(dateOfBirth);
+                    //piggy.setDateOfBirthCalendar(pig_dateOfBirth.getYear(),pig_dateOfBirth.getMonth(),pig_dateOfBirth.getDayOfMonth());
                     piggy.setIdFather(Integer.parseInt(fatherSp.getSelectedItem().toString()));
                     piggy.setIdMother(Integer.parseInt(motherSp.getSelectedItem().toString()));
 
@@ -186,4 +197,17 @@ public class EditPigActivity extends AppCompatActivity {
         });
         builder.show();
     }
+
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,dayOfMonth);
+        dateOfBirth = (calendar.getTime());
+    }
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
+
 }

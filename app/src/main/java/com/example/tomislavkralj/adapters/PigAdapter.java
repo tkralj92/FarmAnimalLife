@@ -49,7 +49,7 @@ public class PigAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = mInflater.inflate(R.layout.list_item_pig,parent,false);
+        View rowView = mInflater.inflate(null,parent,false);
         Resources res = mContext.getResources();
 
         TextView pig_list_weight =
